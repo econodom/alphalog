@@ -1,0 +1,569 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AlphaLog | 100만원으로 1억 만들기 — 10계좌 복리 전략</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700&family=Noto+Serif+KR:wght@400;700&display=swap" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.js"></script>
+<style>
+:root {
+  --bg: #f8f9fc;
+  --surface: #ffffff;
+  --surface2: #f2f4f8;
+  --border: rgba(0,0,0,0.07);
+  --border2: rgba(0,0,0,0.13);
+  --text: #1a1d26;
+  --text2: #5a5f72;
+  --text3: #9a9fb0;
+  --accent: #2563eb;
+  --accent2: #6d52e8;
+  --gold: #d97706;
+  --green: #059669;
+  --coral: #dc4f3a;
+  --sans: 'Noto Sans KR', sans-serif;
+  --serif: 'Noto Serif KR', serif;
+}
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: var(--sans);
+  font-size: 15px;
+  line-height: 1.8;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* ── HEADER ── */
+.site-header {
+  text-align: center;
+  padding: 64px 24px 52px;
+  background: linear-gradient(160deg, #eff6ff 0%, #f5f3ff 50%, #ecfdf5 100%);
+  border-bottom: 1px solid var(--border2);
+  position: relative;
+  overflow: hidden;
+}
+.logo {
+  display: inline-block;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.25em;
+  color: var(--accent);
+  text-transform: uppercase;
+  border: 1px solid rgba(37,99,235,0.3);
+  padding: 5px 14px;
+  border-radius: 2px;
+  margin-bottom: 28px;
+  background: rgba(37,99,235,0.05);
+}
+.hero-kicker {
+  font-size: 12px;
+  color: var(--text2);
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  margin-bottom: 14px;
+}
+.hero-title {
+  font-family: var(--serif);
+  font-size: clamp(26px, 5vw, 44px);
+  font-weight: 700;
+  line-height: 1.25;
+  color: var(--text);
+  margin-bottom: 18px;
+}
+.hero-title em { font-style: normal; color: var(--accent); }
+.hero-sub {
+  font-size: 14px;
+  color: var(--text2);
+  max-width: 500px;
+  margin: 0 auto 32px;
+  line-height: 1.8;
+}
+.hero-stats {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  max-width: 540px;
+  margin: 0 auto;
+  background: #fff;
+  border: 1px solid var(--border2);
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 2px 12px rgba(0,0,0,0.06);
+}
+.hero-stat {
+  flex: 1; min-width: 110px;
+  padding: 16px 18px;
+  border-right: 1px solid var(--border);
+  text-align: center;
+}
+.hero-stat:last-child { border-right: none; }
+.hero-stat .sv { font-size: 20px; font-weight: 700; color: var(--accent); }
+.hero-stat .sl { font-size: 11px; color: var(--text2); margin-top: 3px; }
+
+/* ── LAYOUT ── */
+.container { max-width: 780px; margin: 0 auto; padding: 0 24px; }
+section { padding: 60px 0; border-bottom: 1px solid var(--border); }
+section:last-of-type { border-bottom: none; }
+
+.sec-eyebrow {
+  font-size: 11px; font-weight: 700; letter-spacing: 0.2em;
+  text-transform: uppercase; color: var(--accent); margin-bottom: 8px;
+}
+.sec-title {
+  font-family: var(--serif);
+  font-size: clamp(20px, 3vw, 26px);
+  font-weight: 700; margin-bottom: 12px; line-height: 1.3;
+}
+.sec-body {
+  color: var(--text2); font-size: 14px; line-height: 1.85;
+  margin-bottom: 28px; max-width: 620px;
+}
+
+/* ── RULE CARDS ── */
+.rule-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(210px, 1fr));
+  gap: 12px; margin-bottom: 28px;
+}
+.rule-card {
+  background: var(--surface);
+  border: 1px solid var(--border2);
+  border-radius: 10px; padding: 20px;
+  box-shadow: 0 1px 4px rgba(0,0,0,0.04);
+}
+.rule-card.highlight {
+  border-color: rgba(37,99,235,0.25);
+  background: rgba(37,99,235,0.03);
+}
+.rule-card .rnum { font-size: 11px; color: var(--accent); font-weight: 700; letter-spacing: 0.1em; margin-bottom: 7px; }
+.rule-card .rtitle { font-size: 14px; font-weight: 500; margin-bottom: 6px; }
+.rule-card .rdesc { font-size: 13px; color: var(--text2); line-height: 1.7; }
+
+/* ── FLOW ── */
+.flow {
+  display: flex; align-items: center; gap: 0;
+  flex-wrap: wrap; margin: 24px 0;
+}
+.flow-step {
+  flex: 1; min-width: 90px; text-align: center;
+  padding: 14px 8px;
+  background: var(--surface);
+  border: 1px solid var(--border2);
+  border-radius: 8px;
+  box-shadow: 0 1px 4px rgba(0,0,0,0.04);
+}
+.flow-step .fn { font-size: 16px; font-weight: 700; color: var(--accent2); }
+.flow-step .fd { font-size: 11px; color: var(--text2); margin-top: 3px; }
+.flow-arrow { font-size: 16px; color: var(--text3); padding: 0 8px; flex-shrink: 0; }
+
+/* ── CALLOUT ── */
+.callout {
+  border-left: 3px solid var(--gold);
+  background: rgba(217,119,6,0.05);
+  border-radius: 0 8px 8px 0;
+  padding: 14px 18px; margin: 20px 0;
+}
+.callout p { font-size: 14px; color: var(--text); line-height: 1.75; }
+.callout strong { color: var(--gold); }
+
+/* ── CHART ── */
+.chart-card {
+  background: var(--surface);
+  border: 1px solid var(--border2);
+  border-radius: 12px; padding: 22px;
+  margin-bottom: 20px;
+  box-shadow: 0 1px 6px rgba(0,0,0,0.05);
+}
+.chart-title { font-size: 13px; font-weight: 500; color: var(--text2); margin-bottom: 3px; }
+.chart-sub { font-size: 12px; color: var(--text3); margin-bottom: 16px; }
+.legend-row { display: flex; gap: 16px; flex-wrap: wrap; margin-bottom: 14px; }
+.legend-item { display: flex; align-items: center; gap: 6px; font-size: 12px; color: var(--text2); }
+.legend-dot { width: 10px; height: 10px; border-radius: 2px; }
+.chart-wrap { position: relative; width: 100%; }
+
+/* ── MINI STATS ── */
+.mini-stats {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(155px, 1fr));
+  gap: 10px; margin-top: 6px;
+}
+.mini-stat {
+  background: var(--surface);
+  border: 1px solid var(--border2);
+  border-radius: 10px; padding: 16px 18px;
+  box-shadow: 0 1px 4px rgba(0,0,0,0.04);
+}
+.mini-stat .ml { font-size: 11px; color: var(--text3); margin-bottom: 5px; }
+.mini-stat .mv { font-size: 20px; font-weight: 700; }
+.mini-stat .ms { font-size: 11px; color: var(--text2); margin-top: 2px; }
+
+/* ── ACCOUNT CARDS ── */
+.acct-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(210px, 1fr));
+  gap: 10px; margin-bottom: 28px;
+}
+.acct-card {
+  background: var(--surface);
+  border: 1px solid var(--border2);
+  border-radius: 10px; padding: 16px;
+  position: relative; overflow: hidden;
+  box-shadow: 0 1px 4px rgba(0,0,0,0.04);
+}
+.acct-card::before {
+  content: ''; position: absolute;
+  top: 0; left: 0; right: 0; height: 3px;
+}
+.acct-card.c0::before{background:#2563eb;} .acct-card.c1::before{background:#6d52e8;}
+.acct-card.c2::before{background:#059669;} .acct-card.c3::before{background:#d97706;}
+.acct-card.c4::before{background:#dc4f3a;} .acct-card.c5::before{background:#0891b2;}
+.acct-card.c6::before{background:#7c3aed;} .acct-card.c7::before{background:#16a34a;}
+.acct-card.c8::before{background:#b45309;} .acct-card.c9::before{background:#b91c1c;}
+.acct-num { font-size: 10px; color: var(--text3); font-weight: 700; letter-spacing: 0.08em; margin-bottom: 5px; }
+.acct-start { font-size: 11px; color: var(--text3); }
+.acct-date { font-size: 13px; font-weight: 500; margin-bottom: 10px; }
+.acct-divider { height: 1px; background: var(--border); margin: 8px 0; }
+.acct-row { display: flex; justify-content: space-between; align-items: baseline; margin-bottom: 3px; }
+.acct-row .al { font-size: 11px; color: var(--text3); }
+.acct-row .av { font-size: 12px; font-weight: 500; color: var(--text); }
+.acct-row .av.green { color: var(--green); }
+.acct-row .av.gold { color: var(--gold); }
+
+/* ── TABLE ── */
+.sum-table { width: 100%; border-collapse: collapse; font-size: 13px; }
+.sum-table th {
+  text-align: left; padding: 9px 12px;
+  border-bottom: 1px solid var(--border2);
+  color: var(--text3); font-weight: 500; font-size: 11px; letter-spacing: 0.04em;
+  background: var(--surface2);
+}
+.sum-table th:not(:first-child) { text-align: right; }
+.sum-table td { padding: 9px 12px; border-bottom: 1px solid var(--border); color: var(--text); }
+.sum-table td:not(:first-child) { text-align: right; }
+.sum-table tr:last-child td { border-bottom: none; }
+.sum-table .total-row td { color: var(--gold); font-weight: 700; border-top: 1px solid var(--border2); background: rgba(217,119,6,0.04); }
+.sum-table .acc-num { color: var(--text2); font-weight: 500; }
+.sum-table .green { color: var(--green); }
+
+/* ── TIMELINE ── */
+.timeline { position: relative; padding-left: 26px; }
+.timeline::before {
+  content: ''; position: absolute;
+  left: 5px; top: 6px; bottom: 6px;
+  width: 1px; background: var(--border2);
+}
+.tl-item { position: relative; margin-bottom: 24px; }
+.tl-dot {
+  position: absolute; left: -26px; top: 5px;
+  width: 12px; height: 12px; border-radius: 50%;
+  border: 2px solid var(--accent); background: var(--bg);
+}
+.tl-item.done .tl-dot { background: var(--green); border-color: var(--green); }
+.tl-week { font-size: 11px; color: var(--accent); font-weight: 700; margin-bottom: 2px; letter-spacing: 0.04em; }
+.tl-label { font-size: 14px; font-weight: 500; margin-bottom: 2px; }
+.tl-desc { font-size: 13px; color: var(--text2); }
+
+/* ── HIGHLIGHT BOXES ── */
+.result-box {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(170px, 1fr));
+  gap: 12px; margin-top: 24px;
+}
+.rbox {
+  border-radius: 10px; padding: 20px; text-align: center;
+  border: 1px solid var(--border2);
+}
+.rbox.gold { background: rgba(217,119,6,0.06); border-color: rgba(217,119,6,0.25); }
+.rbox.green { background: rgba(5,150,105,0.05); border-color: rgba(5,150,105,0.2); }
+.rbox.blue { background: rgba(37,99,235,0.05); border-color: rgba(37,99,235,0.2); }
+.rbox .rl { font-size: 11px; margin-bottom: 7px; letter-spacing: 0.04em; }
+.rbox.gold .rl { color: var(--gold); } .rbox.green .rl { color: var(--green); } .rbox.blue .rl { color: var(--accent); }
+.rbox .rv { font-size: 22px; font-weight: 700; }
+.rbox.gold .rv { color: var(--gold); } .rbox.green .rv { color: var(--green); } .rbox.blue .rv { color: var(--accent); }
+
+/* ── FOOTER ── */
+.site-footer {
+  text-align: center; padding: 44px 24px;
+  border-top: 1px solid var(--border);
+  background: var(--surface);
+}
+.footer-logo { font-size: 11px; font-weight: 700; letter-spacing: 0.25em; color: var(--accent); text-transform: uppercase; margin-bottom: 10px; }
+.footer-desc { font-size: 12px; color: var(--text3); line-height: 1.7; }
+.footer-tag {
+  display: inline-block; margin-top: 16px;
+  font-size: 11px; color: var(--text3);
+  border: 1px solid var(--border2); border-radius: 20px; padding: 4px 14px;
+}
+
+@media (max-width: 560px) {
+  .hero-stats { flex-direction: column; }
+  .hero-stat { border-right: none; border-bottom: 1px solid var(--border); }
+  .hero-stat:last-child { border-bottom: none; }
+  .flow { flex-direction: column; }
+  .flow-arrow { transform: rotate(90deg); padding: 4px 0; }
+  .flow-step { width: 100%; }
+}
+</style>
+</head>
+<body>
+
+<header class="site-header">
+  <div class="container">
+    <div class="logo">AlphaLog</div>
+    <p class="hero-kicker">투자 시뮬레이션 프로젝트</p>
+    <h1 class="hero-title">100만원으로 <em>1억</em> 만들기</h1>
+    <p class="hero-sub">주간 10% 복리 × 10계좌 순차 개설<br>최초 원금 출금을 씨앗 삼아 계좌를 불려나가는 전략</p>
+    <div class="hero-stats">
+      <div class="hero-stat"><div class="sv">100만</div><div class="sl">최초 시드</div></div>
+      <div class="hero-stat"><div class="sv">10%</div><div class="sl">주간 목표 수익률</div></div>
+      <div class="hero-stat"><div class="sv">10계좌</div><div class="sl">최대 운용</div></div>
+      <div class="hero-stat"><div class="sv">1억×10</div><div class="sl">최종 목표</div></div>
+    </div>
+  </div>
+</header>
+
+<section>
+  <div class="container">
+    <p class="sec-eyebrow">Strategy Rules</p>
+    <h2 class="sec-title">세 가지 핵심 규칙</h2>
+    <p class="sec-body">단순하지만 강력한 규칙 세 가지로 운용합니다. 복리 엔진을 유지하면서 실현 이익을 확보하고, 그 이익을 새로운 계좌의 씨앗으로 재투입합니다.</p>
+    <div class="rule-grid">
+      <div class="rule-card highlight">
+        <div class="rnum">RULE 01</div>
+        <div class="rtitle">1단계 출금 — 첫 100만원</div>
+        <div class="rdesc">누적 수익이 100만원 도달 시 전액 출금. 이 돈이 다음 계좌의 시드가 됩니다.</div>
+      </div>
+      <div class="rule-card">
+        <div class="rnum">RULE 02</div>
+        <div class="rtitle">2단계 출금 — 1,000만원 단위</div>
+        <div class="rdesc">추가 1,000만원 수익 발생마다 500만원 출금, 나머지 500만원은 복리 재투입.</div>
+      </div>
+      <div class="rule-card">
+        <div class="rnum">RULE 03</div>
+        <div class="rtitle">목표 달성 시 마감</div>
+        <div class="rdesc">출금액 + 운용잔고 합계가 1억원에 도달하면 해당 계좌 운용 완료.</div>
+      </div>
+    </div>
+    <div class="callout">
+      <p>핵심은 <strong>추가 자본 없이</strong> 1계좌의 첫 수익만으로 다음 계좌를 여는 구조입니다.<br>100만원 한 번의 투자로 최대 10계좌를 운용합니다.</p>
+    </div>
+    <div class="flow">
+      <div class="flow-step"><div class="fn">1계좌</div><div class="fd">100만원 시드</div></div>
+      <div class="flow-arrow">→</div>
+      <div class="flow-step"><div class="fn">+100만원</div><div class="fd">첫 출금</div></div>
+      <div class="flow-arrow">→</div>
+      <div class="flow-step"><div class="fn">2계좌</div><div class="fd">100만원 시드</div></div>
+      <div class="flow-arrow">→</div>
+      <div class="flow-step"><div class="fn">···</div><div class="fd">반복</div></div>
+      <div class="flow-arrow">→</div>
+      <div class="flow-step"><div class="fn">10계좌</div><div class="fd">동시 운용</div></div>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="container">
+    <p class="sec-eyebrow">Single Account</p>
+    <h2 class="sec-title">1계좌 단독 시뮬레이션</h2>
+    <p class="sec-body">100만원 시드로 주간 10% 복리 적용 시 71주 만에 총자산 1억원을 달성합니다.</p>
+    <div class="chart-card">
+      <div class="chart-title">운용잔고 · 누적출금 · 누적총자산 추이 (71주)</div>
+      <div class="chart-sub">주간 10% 복리, 출금 규칙 적용</div>
+      <div class="legend-row">
+        <div class="legend-item"><div class="legend-dot" style="background:#2563eb"></div>운용잔고</div>
+        <div class="legend-item"><div class="legend-dot" style="background:#059669"></div>누적출금</div>
+        <div class="legend-item"><div class="legend-dot" style="background:#d97706"></div>누적총자산</div>
+      </div>
+      <div class="chart-wrap" style="height:280px"><canvas id="chart1" role="img" aria-label="1계좌 71주 복리 성장 추이"></canvas></div>
+    </div>
+    <div class="mini-stats">
+      <div class="mini-stat"><div class="ml">달성 주차</div><div class="mv" style="color:var(--accent)">71주</div><div class="ms">약 1년 4개월</div></div>
+      <div class="mini-stat"><div class="ml">시작일</div><div class="mv" style="font-size:16px">2026.06.22</div><div class="ms">이번 주 월요일</div></div>
+      <div class="mini-stat"><div class="ml">달성 예정일</div><div class="mv" style="font-size:16px">2027.11.01</div><div class="ms">71주 후</div></div>
+      <div class="mini-stat"><div class="ml">누적 총자산</div><div class="mv" style="color:var(--gold)">1억원</div><div class="ms">출금 + 잔고</div></div>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="container">
+    <p class="sec-eyebrow">10-Account Strategy</p>
+    <h2 class="sec-title">10계좌 순차 개설 타임라인</h2>
+    <p class="sec-body">잔고가 커질수록 첫 출금 도달 속도가 빨라져 계좌 개설 간격이 점점 짧아집니다.</p>
+    <div class="chart-card">
+      <div class="chart-title">계좌별 운용 기간 (간트 차트)</div>
+      <div class="chart-sub">전체 기준 주차 — 각 계좌의 시작~달성 구간</div>
+      <div class="chart-wrap" style="height:320px"><canvas id="chart2" role="img" aria-label="10계좌 운용 기간 간트 차트"></canvas></div>
+    </div>
+    <div class="acct-grid" id="acct-grid"></div>
+  </div>
+</section>
+
+<section>
+  <div class="container">
+    <p class="sec-eyebrow">Summary</p>
+    <h2 class="sec-title">10계좌 완료 시 총 성과</h2>
+    <p class="sec-body">모든 계좌가 1억원을 달성했을 때의 이론상 합산 수치입니다.</p>
+    <div class="chart-card" style="margin-bottom:24px">
+      <div class="chart-title">계좌별 최종 총자산 비교</div>
+      <div class="chart-sub">각 계좌의 달성 시점 기준 총자산</div>
+      <div class="chart-wrap" style="height:220px"><canvas id="chart3" role="img" aria-label="10계좌 총자산 바 차트"></canvas></div>
+    </div>
+    <div style="background:var(--surface);border:1px solid var(--border2);border-radius:12px;overflow:hidden;box-shadow:0 1px 6px rgba(0,0,0,0.05)">
+      <table class="sum-table">
+        <thead><tr>
+          <th>계좌</th><th>시작일</th><th>기간</th><th>달성일</th><th>누적출금</th><th>총자산</th>
+        </tr></thead>
+        <tbody id="sum-tbody"></tbody>
+      </table>
+    </div>
+    <div class="result-box">
+      <div class="rbox gold"><div class="rl">10계좌 합산 총자산</div><div class="rv" id="total-asset">-</div></div>
+      <div class="rbox green"><div class="rl">최종 계좌 달성일</div><div class="rv" style="font-size:18px" id="final-date">-</div></div>
+      <div class="rbox blue"><div class="rl">최초 투자 원금</div><div class="rv">100만원</div></div>
+    </div>
+    <div class="callout" style="margin-top:24px">
+      <p>100만원 단 한 번의 투자로 10개 계좌를 순차 운용하는 구조입니다.<br>
+      <strong>주간 10% 수익률 유지</strong>가 핵심 전제이며, 본 시나리오는 이상적 복리 모델 기준입니다.</p>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="container">
+    <p class="sec-eyebrow">Roadmap</p>
+    <h2 class="sec-title">운용 로드맵</h2>
+    <p class="sec-body">2026년 6월 22일 시작 기준, 주요 계좌 개설 타이밍입니다.</p>
+    <div class="timeline" id="roadmap"></div>
+  </div>
+</section>
+
+<footer class="site-footer">
+  <div class="container">
+    <div class="footer-logo">AlphaLog</div>
+    <p class="footer-desc">본 시나리오는 교육 및 투자 계획 수립 목적의 이론적 시뮬레이션입니다.<br>실제 수익을 보장하지 않으며, 투자에는 원금 손실 위험이 있습니다.</p>
+    <div class="footer-tag">주간 10% 복리 × 10계좌 전략 시뮬레이션</div>
+  </div>
+</footer>
+
+<script>
+const RATE=0.10,INIT=100,GOAL=10000,PHASE1=100,PHASE2_UNIT=1000;
+const START=new Date(2026,5,22);
+const COLORS=['#2563eb','#6d52e8','#059669','#d97706','#dc4f3a','#0891b2','#7c3aed','#16a34a','#b45309','#b91c1c'];
+
+function addWeeks(d,w){const r=new Date(d);r.setDate(r.getDate()+w*7);return r;}
+function fmtDate(d){return`${d.getFullYear()}.${String(d.getMonth()+1).padStart(2,'0')}.${String(d.getDate()).padStart(2,'0')}`;}
+function fmtM(n){if(n>=10000)return(n/10000).toFixed(1)+'억';return Math.round(n)+'만원';}
+
+function sim(sw){
+  let bal=INIT,totW=0,cumP=0,phase1=false,lastMs=0;
+  const rows=[];
+  for(let w=1;w<=200;w++){
+    const profit=bal*RATE;cumP+=profit;let withdrawn=0;
+    if(!phase1){
+      if(cumP>=PHASE1){withdrawn=PHASE1;bal=bal+profit-withdrawn;phase1=true;}
+      else bal+=profit;
+    }else{
+      const earned=cumP-PHASE1-lastMs;
+      if(earned>=PHASE2_UNIT){const ms=Math.floor(earned/PHASE2_UNIT);withdrawn=ms*PHASE2_UNIT*0.5;lastMs+=ms*PHASE2_UNIT;bal=bal+profit-withdrawn;}
+      else bal+=profit;
+    }
+    totW+=withdrawn;
+    const ta=bal+totW;
+    rows.push({lw:w,gw:sw+w-1,profit,withdrawn,bal:Math.round(bal*100)/100,totW:Math.round(totW*100)/100,ta:Math.round(ta*100)/100,isW:withdrawn>0,isGoal:ta>=GOAL});
+    if(ta>=GOAL)break;
+  }
+  return rows;
+}
+
+const accounts=[];let nextSeed=1;
+for(let i=0;i<10;i++){
+  const sw=nextSeed,rows=sim(sw);
+  const gr=rows.find(r=>r.isGoal),sr=rows.find(r=>r.isW&&r.totW===PHASE1);
+  accounts.push({idx:i+1,sw,rows,gr,startDate:addWeeks(START,sw-1),goalDate:gr?addWeeks(START,gr.gw-1):null,goalLW:gr?gr.lw:null,seedLW:sr?sr.lw:null,seedGW:sr?sw+sr.lw-1:null,finalTA:gr?gr.ta:rows[rows.length-1].ta,finalW:gr?gr.totW:rows[rows.length-1].totW,finalBal:gr?gr.bal:rows[rows.length-1].bal});
+  if(i<9&&sr)nextSeed=sw+sr.lw-1;
+}
+
+// chart1
+(function(){
+  const a=accounts[0];
+  new Chart(document.getElementById('chart1'),{
+    type:'line',
+    data:{labels:a.rows.map(r=>r.lw+'주'),datasets:[
+      {label:'운용잔고',data:a.rows.map(r=>r.bal),borderColor:'#2563eb',backgroundColor:'rgba(37,99,235,0.06)',fill:true,tension:0.35,pointRadius:0,borderWidth:2},
+      {label:'누적출금',data:a.rows.map(r=>r.totW),borderColor:'#059669',borderDash:[5,4],tension:0.35,pointRadius:0,borderWidth:1.5,fill:false},
+      {label:'총자산',data:a.rows.map(r=>r.ta),borderColor:'#d97706',tension:0.35,pointRadius:a.rows.map(r=>r.isGoal?6:0),pointBackgroundColor:'#d97706',borderWidth:2.5,fill:false}
+    ]},
+    options:{responsive:true,maintainAspectRatio:false,interaction:{mode:'index',intersect:false},
+      plugins:{legend:{display:false},tooltip:{backgroundColor:'rgba(255,255,255,0.97)',borderColor:'rgba(0,0,0,0.1)',borderWidth:1,titleColor:'#5a5f72',bodyColor:'#1a1d26',callbacks:{label:ctx=>` ${ctx.dataset.label}: ${fmtM(ctx.raw)}`}}},
+      scales:{x:{ticks:{maxTicksLimit:10,color:'#9a9fb0',font:{size:11}},grid:{color:'rgba(0,0,0,0.05)'}},y:{ticks:{callback:v=>v>=10000?(v/10000).toFixed(1)+'억':Math.round(v)+'만',color:'#9a9fb0',font:{size:11}},grid:{color:'rgba(0,0,0,0.05)'}}}}
+  });
+})();
+
+// chart2
+(function(){
+  new Chart(document.getElementById('chart2'),{
+    type:'bar',
+    data:{labels:accounts.map(a=>a.idx+'계좌'),datasets:[
+      {label:'대기',data:accounts.map(a=>a.sw-1),backgroundColor:'transparent'},
+      {label:'운용',data:accounts.map(a=>a.goalLW||80),backgroundColor:COLORS,borderRadius:4,borderSkipped:false}
+    ]},
+    options:{indexAxis:'y',responsive:true,maintainAspectRatio:false,
+      plugins:{legend:{display:false},tooltip:{backgroundColor:'rgba(255,255,255,0.97)',borderColor:'rgba(0,0,0,0.1)',borderWidth:1,titleColor:'#5a5f72',bodyColor:'#1a1d26',callbacks:{label:(ctx)=>{if(ctx.datasetIndex===0)return null;const a=accounts[ctx.dataIndex];return[`운용: ${a.goalLW}주`,`시작: ${fmtDate(a.startDate)}`,`달성: ${a.goalDate?fmtDate(a.goalDate):'-'}`];}}}},
+      scales:{x:{stacked:true,ticks:{color:'#9a9fb0',font:{size:11},callback:v=>v+'주'},grid:{color:'rgba(0,0,0,0.05)'}},y:{stacked:true,ticks:{color:'#5a5f72',font:{size:11}},grid:{display:false}}}}
+  });
+})();
+
+// chart3
+(function(){
+  new Chart(document.getElementById('chart3'),{
+    type:'bar',
+    data:{labels:accounts.map(a=>a.idx+'계좌'),datasets:[{label:'총자산',data:accounts.map(a=>a.finalTA),backgroundColor:COLORS,borderRadius:4,borderSkipped:false}]},
+    options:{responsive:true,maintainAspectRatio:false,
+      plugins:{legend:{display:false},tooltip:{backgroundColor:'rgba(255,255,255,0.97)',borderColor:'rgba(0,0,0,0.1)',borderWidth:1,titleColor:'#5a5f72',bodyColor:'#1a1d26',callbacks:{label:ctx=>` 총자산: ${fmtM(ctx.raw)}`}}},
+      scales:{x:{ticks:{color:'#9a9fb0',font:{size:11}},grid:{display:false}},y:{ticks:{callback:v=>v>=10000?(v/10000).toFixed(1)+'억':Math.round(v)+'만',color:'#9a9fb0',font:{size:11}},grid:{color:'rgba(0,0,0,0.05)'}}}}
+  });
+})();
+
+// account cards
+const ag=document.getElementById('acct-grid');
+accounts.forEach((a,i)=>{
+  const el=document.createElement('div');el.className=`acct-card c${i}`;
+  el.innerHTML=`<div class="acct-num">ACCOUNT ${String(a.idx).padStart(2,'0')}</div><div class="acct-start">개설일</div><div class="acct-date">${fmtDate(a.startDate)}</div><div class="acct-divider"></div><div class="acct-row"><span class="al">운용 기간</span><span class="av">${a.goalLW}주</span></div><div class="acct-row"><span class="al">달성일</span><span class="av">${a.goalDate?fmtDate(a.goalDate):'-'}</span></div><div class="acct-row"><span class="al">누적 출금</span><span class="av green">${fmtM(a.finalW)}</span></div><div class="acct-row"><span class="al">총 자산</span><span class="av gold">${fmtM(a.finalTA)}</span></div>`;
+  ag.appendChild(el);
+});
+
+// summary table
+const tbody=document.getElementById('sum-tbody');let totalTA=0;
+accounts.forEach(a=>{
+  totalTA+=a.finalTA;
+  const tr=document.createElement('tr');
+  tr.innerHTML=`<td class="acc-num">${a.idx}계좌</td><td style="color:var(--text2)">${fmtDate(a.startDate)}</td><td>${a.goalLW}주</td><td>${a.goalDate?fmtDate(a.goalDate):'-'}</td><td class="green">${fmtM(a.finalW)}</td><td style="color:var(--gold)">${fmtM(a.finalTA)}</td>`;
+  tbody.appendChild(tr);
+});
+const totTr=document.createElement('tr');totTr.className='total-row';
+totTr.innerHTML=`<td colspan="4">합 계</td><td>-</td><td>${fmtM(totalTA)}</td>`;
+tbody.appendChild(totTr);
+document.getElementById('total-asset').textContent=fmtM(totalTA);
+const la=accounts[accounts.length-1];
+document.getElementById('final-date').textContent=la.goalDate?fmtDate(la.goalDate):'-';
+
+// roadmap
+const rm=document.getElementById('roadmap');
+const mls=[
+  {week:1,label:'1계좌 개설',desc:'100만원 시드 투입 · 주간 10% 복리 시작',date:fmtDate(accounts[0].startDate),done:false},
+  ...accounts.slice(1).map((a,i)=>({week:a.sw,label:`${i+2}계좌 개설`,desc:`${i+1}계좌 첫 출금(100만원)으로 시드 확보`,date:fmtDate(a.startDate),done:false})),
+  {week:accounts[0].gr?.gw,label:'1계좌 1억 달성',desc:'최초 목표 달성 · 계좌 마감',date:accounts[0].goalDate?fmtDate(accounts[0].goalDate):'-',done:true},
+  {week:la.gr?.gw,label:'10계좌 전체 완료',desc:`총 ${fmtM(totalTA)} 달성 · 프로젝트 완료`,date:la.goalDate?fmtDate(la.goalDate):'-',done:true}
+].sort((a,b)=>(a.week||0)-(b.week||0));
+
+mls.forEach(m=>{
+  const el=document.createElement('div');el.className='tl-item'+(m.done?' done':'');
+  el.innerHTML=`<div class="tl-dot"></div><div class="tl-week">${m.week?m.week+'주차 · ':''}${m.date}</div><div class="tl-label">${m.label}</div><div class="tl-desc">${m.desc}</div>`;
+  rm.appendChild(el);
+});
+</script>
+</body>
+</html>
