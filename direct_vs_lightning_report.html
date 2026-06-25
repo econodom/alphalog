@@ -583,7 +583,7 @@ footer {
         <tr class="key-row">
           <td class="item-label">Min Day to Payout</td>
           <td class="col-direct"><span class="tag tag-warn">5일</span> <span class="muted">(공식 제품 페이지 기준)</span></td>
-          <td class="col-lightning"><span class="tag tag-warn">5일</span> <span class="muted">(제품 페이지 기준 / 헬프센터엔 "없음" 명시 — 확인 필요)</span></td>
+          <td class="col-lightning"><span class="tag tag-green">없음</span> <span class="muted">(헬프센터 공식 확정 / 이미지 "5 Days"는 Payout Frequency 항목)</span></td>
         </tr>
         <tr>
           <td class="item-label">최소 활동 요건</td>
@@ -737,9 +737,9 @@ footer {
     <div class="payout-card pc-lightning">
       <div class="payout-card-header">🟣 Tradeify Lightning</div>
       <div class="payout-rows">
-        <div class="pr hl-warn">
-          <span class="pr-label">⚠ 최소 거래일</span>
-          <span class="pr-val" style="color:var(--warn);">5일 (제품 페이지 기준)</span>
+        <div class="pr hl-good">
+          <span class="pr-label">✓ 최소 거래일</span>
+          <span class="pr-val" style="color:var(--good);">없음 (헬프센터 공식 확정)</span>
         </div>
         <div class="pr hl-warn">
           <span class="pr-label">⚠ 컨시스턴시</span>
@@ -765,9 +765,9 @@ footer {
           <span class="pr-label">최소 인출액</span>
           <span class="pr-val" style="color:var(--lightning);">$1,000</span>
         </div>
-        <div class="pr hl-good">
-          <span class="pr-label">✓ 수익 배분</span>
-          <span class="pr-val" style="color:var(--good);">첫 $15,000 → 100%<br>이후 → 90% / 10%</span>
+        <div class="pr">
+          <span class="pr-label">수익 배분</span>
+          <span class="pr-val" style="color:var(--lightning);">90% / 10% (전 회차)</span>
         </div>
         <div class="pr">
           <span class="pr-label">처리 시간</span>
@@ -807,7 +807,7 @@ footer {
           <td class="col-direct"><span class="val-direct">$1,800</span></td>
           <td class="col-lightning"><span class="mono">$2,000</span></td>
           <td class="col-lightning"><span class="val-lightning">$54,100</span></td>
-          <td class="col-lightning"><span class="val-good">$2,000</span> <span class="muted">※100%</span></td>
+          <td class="col-lightning"><span class="val-lightning">$1,800</span></td>
         </tr>
         <tr>
           <td class="item-label">2회</td>
@@ -816,7 +816,7 @@ footer {
           <td class="col-direct"><span class="val-direct">$1,800</span></td>
           <td class="col-lightning"><span class="mono">$2,000</span></td>
           <td class="col-lightning"><span class="val-lightning">$54,100</span></td>
-          <td class="col-lightning"><span class="val-good">$2,000</span> <span class="muted">※100%</span></td>
+          <td class="col-lightning"><span class="val-lightning">$1,800</span></td>
         </tr>
         <tr>
           <td class="item-label">3회</td>
@@ -825,7 +825,7 @@ footer {
           <td class="col-direct"><span class="val-direct">$1,800</span></td>
           <td class="col-lightning"><span class="mono">$2,000</span></td>
           <td class="col-lightning"><span class="val-lightning">$54,100</span></td>
-          <td class="col-lightning"><span class="val-good">$2,000</span> <span class="muted">※$15K 구간 내</span></td>
+          <td class="col-lightning"><span class="val-lightning">$1,800</span></td>
         </tr>
         <tr class="key-row">
           <td class="item-label">4회 ↑</td>
@@ -834,7 +834,7 @@ footer {
           <td class="col-direct"><span class="val-direct">$2,250</span></td>
           <td class="col-lightning"><span class="mono" style="color:var(--lightning); font-weight:700;">$2,500</span></td>
           <td class="col-lightning"><span class="val-lightning">$54,600</span></td>
-          <td class="col-lightning"><span class="val-lightning">$2,250</span> <span class="muted">※90%</span></td>
+          <td class="col-lightning"><span class="val-lightning">$2,250</span></td>
         </tr>
         <tr class="key-row">
           <td class="item-label">5회 ↑</td>
@@ -843,7 +843,7 @@ footer {
           <td class="col-direct"><span class="val-direct">$2,250</span></td>
           <td class="col-lightning"><span class="mono" style="color:var(--lightning); font-weight:700;">$2,500</span></td>
           <td class="col-lightning"><span class="val-lightning">$54,600</span></td>
-          <td class="col-lightning"><span class="val-lightning">$2,250</span> <span class="muted">※90%</span></td>
+          <td class="col-lightning"><span class="val-lightning">$2,250</span></td>
         </tr>
       </tbody>
       <tfoot>
@@ -854,12 +854,12 @@ footer {
           <td class="col-direct"><span class="val-direct">$9,900</span></td>
           <td class="col-lightning"><span class="mono">$11,000</span></td>
           <td class="col-lightning">—</td>
-          <td class="col-lightning"><span class="val-good" style="font-size:14px;">$10,500</span> <span class="muted">※100% 구간 가정</span></td>
+          <td class="col-lightning"><span class="val-lightning" style="font-size:14px;">$9,900</span></td>
         </tr>
       </tfoot>
     </table>
     <div style="padding:10px 16px; font-size:11.5px; color:var(--text-3); border-top:1px solid var(--border-light);">
-      ※ 출금 후 잔고 $52,100(ITB) 유지 가정 · Lightning 1~3회 실수령은 누적 출금액이 첫 $15,000 이내라면 100% 수령 · 4회차부터 90/10 전환 · 실제 수령액은 $15K 소진 시점에 따라 달라짐
+      ※ 출금 후 잔고 $52,100(ITB) 유지 가정 · 양사 모두 전 회차 90/10 수익 배분 · 출금 신청액 전액 계좌에서 차감
     </div>
   </div>
 </div>
@@ -885,8 +885,7 @@ footer {
       <h3>🟣 Tradeify Lightning</h3>
       <ul>
         <li class="pro">구매 비용 $320 (할인가, 정가 $492) — Direct보다 $44 저렴</li>
-        <li class="con">최소 거래일 5일 (제품 페이지 기준 — 헬프센터와 상이, 확인 필요)</li>
-        <li class="pro">첫 $15,000 수익 100% 수령 (약 $600 추가 이익)</li>
+        <li class="pro">최소 거래일 없음 — 조건 충족 즉시 출금 신청 가능 (헬프센터 공식 확정)</li>
         <li class="pro">2회차~ 최소 목표 $2,000 (Direct보다 $500 낮음)</li>
         <li class="pro">페이아웃 횟수 제한 없음 → Elite Live 전환 가능</li>
         <li class="con">컨시스턴시 회차마다 증가 (20%→25%→30%)</li>
@@ -902,10 +901,9 @@ footer {
 <div class="notice">
   <strong>⚠ 공통 주의사항</strong><br>
   · 페이아웃 신청 후 처리 전에 잔고가 최소 목표 아래로 내려가면 신청 거부 (양사 공통)<br>
-  · Tradeify Lightning 최소 거래일: 제품 페이지엔 "5 Days" 표기, 헬프센터엔 "No Minimum Trading Day Count" 명시 — 실제 적용 기준 디스코드 또는 고객지원 확인 권장<br>
-  · Tradeify Lightning은 컨시스턴시 산정 시 손실일이 생기면 분모(총수익)가 줄어 비율이 악화될 수 있음<br>
-  · ITB 초과 후 출금 시 MLL 재trailing 여부는 LucidDirect 공식 미확인 → 공식 디스코드 확인 권장<br>
-  · Lightning 첫 $15,000 100% 구간은 계좌당 누적 출금 기준 — 평생 1회만 해당
+  · Tradeify Lightning 최소 거래일: 제품 페이지 "5 Days"는 Payout Frequency(출금 주기) 항목이며, 최소 거래일은 헬프센터 공식 기준 없음<br>
+  · Lightning 컨시스턴시 산정 시 손실일이 생기면 총수익이 줄어 비율 악화 가능 — 주의<br>
+  · ITB 초과 후 출금 시 MLL 재trailing 여부는 LucidDirect 공식 미확인 → 디스코드 확인 권장
 </div>
 
 <!-- ── 용어 정의 ── -->
@@ -967,7 +965,7 @@ footer {
 
       <div class="glos-item">
         <div class="glos-term">수익 배분 <span class="glos-abbr">Profit Split</span></div>
-        <div class="glos-def">실현 수익을 트레이더와 프랍 펌이 나누는 비율. LucidDirect: 전 회차 90/10. Tradeify Lightning: 첫 $15,000 누적 출금까지 100%, 이후 90/10. <em>출금 신청액 전액이 계좌에서 차감되고, 배분 비율에 따른 금액이 실제 입금.</em></div>
+        <div class="glos-def">실현 수익을 트레이더와 프랍 펌이 나누는 비율. LucidDirect · Tradeify Lightning 모두 전 회차 90/10. <em>출금 신청액 전액이 계좌에서 차감되고, 90%가 실제 입금됨.</em></div>
       </div>
 
       <div class="glos-item">
