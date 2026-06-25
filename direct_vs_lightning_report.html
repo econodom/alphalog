@@ -1,0 +1,1010 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>LucidDirect vs Tradeify Lightning 50K 비교</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;600&display=swap');
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+:root {
+  --bg: #f5f6f8;
+  --white: #ffffff;
+  --border: #dde1e8;
+  --border-light: #edf0f4;
+
+  --direct: #1d4ed8;
+  --direct-bg: #eff6ff;
+  --direct-border: #bfdbfe;
+
+  --lightning: #7c3aed;
+  --lightning-bg: #f5f3ff;
+  --lightning-border: #ddd6fe;
+
+  --warn: #b45309;
+  --warn-bg: #fffbeb;
+  --warn-border: #fcd34d;
+
+  --good: #15803d;
+  --good-bg: #f0fdf4;
+
+  --text: #111827;
+  --text-2: #374151;
+  --text-3: #6b7280;
+  --text-4: #9ca3af;
+
+  --mono: 'JetBrains Mono', monospace;
+  --sans: 'Inter', sans-serif;
+}
+
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: var(--sans);
+  font-size: 13.5px;
+  line-height: 1.65;
+  padding: 40px 20px 80px;
+}
+
+.page { max-width: 900px; margin: 0 auto; }
+
+/* ── HEADER ── */
+.report-header {
+  background: var(--white);
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  padding: 28px 32px;
+  margin-bottom: 24px;
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 20px;
+}
+
+.header-left h1 {
+  font-size: 22px;
+  font-weight: 700;
+  letter-spacing: -0.025em;
+  line-height: 1.3;
+  margin-bottom: 6px;
+}
+
+.h-direct { color: var(--direct); }
+.h-lightning { color: var(--lightning); }
+
+.header-left .meta {
+  font-size: 12px;
+  color: var(--text-3);
+  font-family: var(--mono);
+}
+
+.account-pills {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  align-items: flex-end;
+}
+
+.pill {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 7px 14px;
+  border-radius: 30px;
+  font-size: 12px;
+  font-weight: 600;
+  white-space: nowrap;
+}
+
+.pill-direct { background: var(--direct-bg); color: var(--direct); border: 1px solid var(--direct-border); }
+.pill-lightning { background: var(--lightning-bg); color: var(--lightning); border: 1px solid var(--lightning-border); }
+
+.pill-num {
+  background: rgba(0,0,0,0.08);
+  border-radius: 20px;
+  padding: 1px 8px;
+  font-size: 11px;
+}
+
+/* ── SECTION ── */
+.section { margin-bottom: 22px; }
+
+.section-label {
+  font-family: var(--mono);
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--text-3);
+  margin-bottom: 10px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.section-label::after {
+  content: '';
+  flex: 1;
+  height: 1px;
+  background: var(--border);
+}
+
+/* ── CARD ── */
+.card {
+  background: var(--white);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  overflow: hidden;
+}
+
+/* ── TABLE ── */
+table { width: 100%; border-collapse: collapse; }
+
+.tbl thead th {
+  padding: 11px 16px;
+  font-size: 11.5px;
+  font-weight: 600;
+  text-align: left;
+  background: #f8fafc;
+  border-bottom: 1px solid var(--border);
+  white-space: nowrap;
+}
+
+.tbl thead th.th-item { color: var(--text-3); width: 30%; }
+.tbl thead th.th-direct {
+  color: var(--direct);
+  background: var(--direct-bg);
+  border-bottom-color: var(--direct-border);
+}
+.tbl thead th.th-lightning {
+  color: var(--lightning);
+  background: var(--lightning-bg);
+  border-bottom-color: var(--lightning-border);
+}
+
+.tbl tbody tr { border-bottom: 1px solid var(--border-light); }
+.tbl tbody tr:last-child { border-bottom: none; }
+.tbl tbody tr:hover { background: #fafbfc; }
+
+.tbl tbody td {
+  padding: 10px 16px;
+  font-size: 13px;
+  vertical-align: middle;
+}
+
+td.item-label {
+  color: var(--text-2);
+  font-weight: 500;
+  font-size: 12.5px;
+}
+
+tr.key-row td { background: #fafafa; }
+tr.key-row td.item-label { color: var(--text); font-weight: 600; }
+
+td.col-direct { background: rgba(239,246,255,0.5); }
+td.col-lightning { background: rgba(245,243,255,0.5); }
+tr.key-row td.col-direct { background: rgba(239,246,255,0.9); }
+tr.key-row td.col-lightning { background: rgba(245,243,255,0.9); }
+
+/* ── TAGS ── */
+.tag {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  padding: 2px 9px;
+  border-radius: 20px;
+  font-size: 11.5px;
+  font-weight: 600;
+  font-family: var(--mono);
+  white-space: nowrap;
+}
+
+.tag-green  { background: #dcfce7; color: #15803d; }
+.tag-blue   { background: #dbeafe; color: #1d4ed8; }
+.tag-purple { background: #ede9fe; color: #6d28d9; }
+.tag-warn   { background: #fef3c7; color: #92400e; }
+.tag-red    { background: #fee2e2; color: #991b1b; }
+.tag-gray   { background: #f1f5f9; color: #475569; }
+
+.mono { font-family: var(--mono); font-size: 12px; }
+.val-direct { color: var(--direct); font-weight: 600; font-family: var(--mono); }
+.val-lightning { color: var(--lightning); font-weight: 600; font-family: var(--mono); }
+.val-good { color: var(--good); font-weight: 600; font-family: var(--mono); }
+.val-warn { color: var(--warn); font-weight: 600; }
+.muted { color: var(--text-3); font-size: 11.5px; }
+
+/* ── PAYOUT CARDS ── */
+.payout-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+  margin-bottom: 22px;
+}
+
+.payout-card {
+  background: var(--white);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  overflow: hidden;
+}
+
+.payout-card-header {
+  padding: 12px 16px;
+  font-size: 13px;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.payout-card.pc-direct .payout-card-header {
+  background: var(--direct-bg);
+  color: var(--direct);
+  border-bottom: 1px solid var(--direct-border);
+}
+
+.payout-card.pc-lightning .payout-card-header {
+  background: var(--lightning-bg);
+  color: var(--lightning);
+  border-bottom: 1px solid var(--lightning-border);
+}
+
+.payout-rows { padding: 4px 0; }
+
+.pr {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 8px 16px;
+  border-bottom: 1px solid var(--border-light);
+  font-size: 12.5px;
+  gap: 12px;
+}
+
+.pr:last-child { border-bottom: none; }
+.pr-label { color: var(--text-3); flex-shrink: 0; }
+.pr-val { font-family: var(--mono); font-size: 12.5px; font-weight: 600; text-align: right; }
+
+.pr.hl-warn { background: #fffbeb; }
+.pr.hl-warn .pr-label { color: var(--warn); }
+.pr.hl-good { background: var(--good-bg); }
+.pr.hl-good .pr-label { color: var(--good); }
+
+/* ── CONSISTENCY TABLE ── */
+.cons-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+  margin-bottom: 22px;
+}
+
+.cons-card {
+  background: var(--white);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  overflow: hidden;
+}
+
+.cons-card-header {
+  padding: 10px 16px;
+  font-size: 12px;
+  font-weight: 700;
+  border-bottom: 1px solid var(--border);
+}
+
+.cons-card.cc-direct .cons-card-header { background: var(--direct-bg); color: var(--direct); border-bottom-color: var(--direct-border); }
+.cons-card.cc-lightning .cons-card-header { background: var(--lightning-bg); color: var(--lightning); border-bottom-color: var(--lightning-border); }
+
+.cons-tbl { width: 100%; border-collapse: collapse; font-size: 12.5px; }
+.cons-tbl th { padding: 8px 14px; background: #f8fafc; color: var(--text-3); font-size: 11px; font-weight: 600; text-align: left; border-bottom: 1px solid var(--border-light); }
+.cons-tbl td { padding: 8px 14px; border-bottom: 1px solid var(--border-light); }
+.cons-tbl tr:last-child td { border-bottom: none; }
+.cons-tbl tr.c-fixed td { background: var(--direct-bg); color: var(--direct); font-weight: 600; }
+.cons-tbl tr.c-inc td:nth-child(2) { color: var(--warn); font-weight: 600; }
+.cons-tbl tr.c-high td:nth-child(2) { color: var(--lightning); font-weight: 700; }
+
+/* ── DLL TABLE ── */
+.dll-inner { padding: 16px; }
+.dll-title { font-size: 12px; font-weight: 600; color: var(--lightning); margin-bottom: 10px; }
+.dll-tbl { width: 100%; border-collapse: collapse; font-size: 12.5px; }
+.dll-tbl th { padding: 7px 12px; background: #f8fafc; color: var(--text-3); font-size: 11px; font-weight: 600; text-align: left; border-bottom: 1px solid var(--border); }
+.dll-tbl td { padding: 8px 12px; border-bottom: 1px solid var(--border-light); color: var(--text-2); }
+.dll-tbl tr:last-child td { border-bottom: none; }
+.dll-tbl tr.dll-high td { background: var(--lightning-bg); color: var(--lightning); font-weight: 600; }
+
+/* ── CASHFLOW TABLE ── */
+.cf-tbl thead th { font-size: 11px; padding: 9px 12px; }
+.cf-tbl tbody td { padding: 9px 12px; font-size: 12.5px; }
+.cf-tbl tfoot td {
+  padding: 10px 12px;
+  font-size: 12.5px;
+  font-weight: 700;
+  background: #f8fafc;
+  border-top: 2px solid var(--border);
+}
+
+/* ── SUMMARY CARDS ── */
+.summary-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+  margin-bottom: 22px;
+}
+
+.sum-card {
+  border-radius: 12px;
+  padding: 18px 20px;
+  border: 1px solid;
+}
+
+.sum-card.sc-direct { background: var(--direct-bg); border-color: var(--direct-border); }
+.sum-card.sc-lightning { background: var(--lightning-bg); border-color: var(--lightning-border); }
+
+.sum-card h3 { font-size: 13px; font-weight: 700; margin-bottom: 12px; }
+.sc-direct h3 { color: var(--direct); }
+.sc-lightning h3 { color: var(--lightning); }
+
+.sum-card ul { list-style: none; display: flex; flex-direction: column; gap: 6px; }
+
+.sum-card li {
+  font-size: 12.5px;
+  color: var(--text-2);
+  padding-left: 16px;
+  position: relative;
+  line-height: 1.5;
+}
+
+.sum-card li.pro::before { content: '✓'; position: absolute; left: 0; color: #16a34a; font-size: 11px; top: 2px; font-weight: 700; }
+.sum-card li.con::before { content: '!'; position: absolute; left: 0; color: var(--warn); font-size: 11px; top: 1px; font-weight: 700; }
+
+/* ── NOTICE ── */
+.notice {
+  background: var(--warn-bg);
+  border: 1px solid var(--warn-border);
+  border-left: 3px solid var(--warn);
+  border-radius: 8px;
+  padding: 12px 16px;
+  font-size: 12.5px;
+  color: var(--warn);
+  margin-bottom: 22px;
+  line-height: 1.65;
+}
+.notice strong { color: #92400e; }
+
+/* ── GLOSSARY ── */
+.glossary {
+  background: var(--white);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  overflow: hidden;
+  margin-bottom: 22px;
+}
+
+.glossary-header {
+  padding: 14px 20px;
+  background: #1e293b;
+  color: #f1f5f9;
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: 0.02em;
+}
+
+.glossary-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+}
+
+.glos-item {
+  padding: 14px 20px;
+  border-bottom: 1px solid var(--border-light);
+  border-right: 1px solid var(--border-light);
+}
+
+.glos-item:nth-child(even) { border-right: none; }
+.glos-item:nth-last-child(-n+2) { border-bottom: none; }
+
+.glos-term {
+  font-family: var(--mono);
+  font-size: 11.5px;
+  font-weight: 700;
+  color: #1e293b;
+  margin-bottom: 4px;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.glos-abbr {
+  font-size: 10px;
+  background: #f1f5f9;
+  color: #64748b;
+  padding: 1px 6px;
+  border-radius: 4px;
+  font-weight: 500;
+}
+
+.glos-def {
+  font-size: 12px;
+  color: var(--text-2);
+  line-height: 1.6;
+}
+
+.glos-def em { color: var(--text-3); font-style: normal; font-size: 11.5px; }
+
+/* ── FOOTER ── */
+footer {
+  margin-top: 32px;
+  padding-top: 16px;
+  border-top: 1px solid var(--border);
+  font-size: 11px;
+  color: var(--text-4);
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 6px;
+  font-family: var(--mono);
+}
+
+@media (max-width: 640px) {
+  .report-header { flex-direction: column; }
+  .account-pills { align-items: flex-start; flex-direction: row; flex-wrap: wrap; }
+  .payout-grid, .cons-grid, .summary-grid, .glossary-grid { grid-template-columns: 1fr; }
+  .glos-item { border-right: none !important; }
+  .glos-item:nth-last-child(-n+2) { border-bottom: 1px solid var(--border-light); }
+  .glos-item:last-child { border-bottom: none; }
+}
+</style>
+</head>
+<body>
+<div class="page">
+
+<!-- ── HEADER ── -->
+<div class="report-header">
+  <div class="header-left">
+    <h1>
+      <span class="h-direct">LucidDirect</span> vs
+      <span class="h-lightning">Tradeify Lightning</span><br>
+      50K 즉시 펀디드 비교 보고서
+    </h1>
+    <div class="meta">AlphaLog · 2026.06 기준 · 공식 헬프센터 검증 완료</div>
+  </div>
+  <div class="account-pills">
+    <div class="pill pill-direct">
+      <span>LucidDirect 50K</span>
+      <span class="pill-num">lucidtrading.com</span>
+    </div>
+    <div class="pill pill-lightning">
+      <span>Lightning Funded 50K</span>
+      <span class="pill-num">tradeify.co</span>
+    </div>
+  </div>
+</div>
+
+<!-- ── 01. 기본 스펙 ── -->
+<div class="section">
+  <div class="section-label">01 · 기본 스펙 비교</div>
+  <div class="card">
+    <table class="tbl">
+      <thead>
+        <tr>
+          <th class="th-item">항목</th>
+          <th class="th-direct">🔵 LucidDirect</th>
+          <th class="th-lightning">🟣 Tradeify Lightning</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td class="item-label">계좌 크기</td>
+          <td class="col-direct"><span class="mono">$50,000</span></td>
+          <td class="col-lightning"><span class="mono">$50,000</span></td>
+        </tr>
+        <tr class="key-row">
+          <td class="item-label">구매 비용</td>
+          <td class="col-direct"><span class="mono">$364</span> <span class="muted">(쿠폰 적용, 정가 $520)</span></td>
+          <td class="col-lightning"><span class="mono val-good">$320</span> <span class="muted">(할인가, 정가 $492)</span></td>
+        </tr>
+        <tr>
+          <td class="item-label">진입 방식</td>
+          <td class="col-direct"><span class="tag tag-blue">즉시 펀디드</span></td>
+          <td class="col-lightning"><span class="tag tag-purple">즉시 펀디드</span></td>
+        </tr>
+        <tr>
+          <td class="item-label">MLL (최대손실한도)</td>
+          <td class="col-direct"><span class="mono">$2,000</span></td>
+          <td class="col-lightning"><span class="mono">$2,000</span></td>
+        </tr>
+        <tr class="key-row">
+          <td class="item-label">DLL (일일손실한도)</td>
+          <td class="col-direct"><span class="tag tag-warn">$1,200</span> <span class="muted">소프트 브리치</span></td>
+          <td class="col-lightning"><span class="tag tag-warn">$1,250</span> <span class="muted">소프트 브리치</span></td>
+        </tr>
+        <tr>
+          <td class="item-label">DLL 변화 조건</td>
+          <td class="col-direct"><span class="mono" style="font-size:11.5px;">ITB($52,100) 초과 시 → Peak EOD × 60%</span></td>
+          <td class="col-lightning"><span class="mono" style="font-size:11.5px;">잔고 $53,000(6% 수익) 도달 시 → $2,000으로 증가</span></td>
+        </tr>
+        <tr>
+          <td class="item-label">드로다운 방식</td>
+          <td class="col-direct">EOD Trailing</td>
+          <td class="col-lightning">EOD Trailing</td>
+        </tr>
+        <tr>
+          <td class="item-label">ITB / 드로다운 고정 기준</td>
+          <td class="col-direct"><span class="mono">$52,100</span></td>
+          <td class="col-lightning"><span class="mono">$52,100</span></td>
+        </tr>
+        <tr>
+          <td class="item-label">Locked MLL</td>
+          <td class="col-direct"><span class="mono">$50,100</span></td>
+          <td class="col-lightning"><span class="mono">$50,100</span></td>
+        </tr>
+        <tr class="key-row">
+          <td class="item-label">컨시스턴시 룰</td>
+          <td class="col-direct"><span class="tag tag-blue">20% 고정</span> <span class="muted">전 회차 동일</span></td>
+          <td class="col-lightning"><span class="tag tag-warn">20%→25%→30%</span> <span class="muted">회차마다 증가</span></td>
+        </tr>
+        <tr>
+          <td class="item-label">최대 계약수</td>
+          <td class="col-direct"><span class="mono">4 Mini / 40 Micro</span></td>
+          <td class="col-lightning"><span class="mono">4 Mini / 40 Micro</span></td>
+        </tr>
+        <tr>
+          <td class="item-label">스케일링 플랜</td>
+          <td class="col-direct"><span class="tag tag-green">없음</span> <span class="muted">처음부터 풀사이즈</span></td>
+          <td class="col-lightning"><span class="tag tag-green">없음</span> <span class="muted">처음부터 풀사이즈</span></td>
+        </tr>
+        <tr>
+          <td class="item-label">버퍼 잔고</td>
+          <td class="col-direct"><span class="tag tag-green">없음</span></td>
+          <td class="col-lightning"><span class="tag tag-green">없음</span></td>
+        </tr>
+        <tr>
+          <td class="item-label">뉴스 트레이딩</td>
+          <td class="col-direct"><span class="tag tag-green">허용</span></td>
+          <td class="col-lightning"><span class="tag tag-green">허용</span></td>
+        </tr>
+        <tr>
+          <td class="item-label">포지션 마감</td>
+          <td class="col-direct"><span class="mono">4:45 PM EST</span></td>
+          <td class="col-lightning"><span class="mono">4:59 PM EST</span></td>
+        </tr>
+        <tr>
+          <td class="item-label">리셋</td>
+          <td class="col-direct"><span class="tag tag-red">불가</span></td>
+          <td class="col-lightning"><span class="tag tag-red">불가</span></td>
+        </tr>
+        <tr>
+          <td class="item-label">가구당 최대 계좌</td>
+          <td class="col-direct"><span class="mono">5개</span></td>
+          <td class="col-lightning"><span class="mono">5개</span></td>
+        </tr>
+        <tr class="key-row">
+          <td class="item-label">Min Day to Payout</td>
+          <td class="col-direct"><span class="tag tag-warn">5일</span> <span class="muted">(공식 제품 페이지 기준)</span></td>
+          <td class="col-lightning"><span class="tag tag-warn">5일</span> <span class="muted">(제품 페이지 기준 / 헬프센터엔 "없음" 명시 — 확인 필요)</span></td>
+        </tr>
+        <tr>
+          <td class="item-label">최소 활동 요건</td>
+          <td class="col-direct"><span class="muted">명시 없음</span></td>
+          <td class="col-lightning"><span class="muted">주 1회 이상 거래 (미충족 시 경고 후 삭제)</span></td>
+        </tr>
+        <tr>
+          <td class="item-label">지원 플랫폼</td>
+          <td class="col-direct"><span class="muted">NinjaTrader, Tradovate, TradingView 등</span></td>
+          <td class="col-lightning"><span class="muted">Tradovate, NinjaTrader, WealthCharts, TradeSea</span></td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<!-- ── 02. 컨시스턴시 상세 ── -->
+<div class="section">
+  <div class="section-label">02 · 컨시스턴시 룰 상세 비교</div>
+  <div class="cons-grid">
+
+    <div class="cons-card cc-direct">
+      <div class="cons-card-header">🔵 LucidDirect — 20% 고정</div>
+      <table class="cons-tbl">
+        <thead><tr><th>회차</th><th>컨시스턴시</th><th>예시 (총수익 $3,000 기준)</th></tr></thead>
+        <tbody>
+          <tr class="c-fixed"><td>1회차</td><td>20%</td><td>하루 최대 $600</td></tr>
+          <tr class="c-fixed"><td>2회차</td><td>20%</td><td>하루 최대 $500 (목표 $2,500 기준)</td></tr>
+          <tr class="c-fixed"><td>3회차 이후</td><td>20%</td><td>동일 유지</td></tr>
+        </tbody>
+      </table>
+      <div style="padding:10px 14px; font-size:11.5px; color:var(--text-3);">전 회차 동일한 20% 적용 — 장기 운영 시 조건 변화 없음</div>
+    </div>
+
+    <div class="cons-card cc-lightning">
+      <div class="cons-card-header">🟣 Tradeify Lightning — 점진 증가</div>
+      <table class="cons-tbl">
+        <thead><tr><th>회차</th><th>컨시스턴시</th><th>예시 (각 목표 기준)</th></tr></thead>
+        <tbody>
+          <tr><td>1회차</td><td style="color:var(--good); font-weight:600;">20%</td><td>총수익 $3,000 → 하루 최대 $600</td></tr>
+          <tr class="c-inc"><td>2회차</td><td>25%</td><td>총수익 $2,000 → 하루 최대 $500</td></tr>
+          <tr class="c-high"><td>3회차 이후</td><td>30%</td><td>총수익 $2,000 → 하루 최대 $600</td></tr>
+        </tbody>
+      </table>
+      <div style="padding:10px 14px; font-size:11.5px; color:var(--warn);">⚠ 회차가 쌓일수록 조건 완화 (30%는 사실상 Direct 20%보다 느슨해짐)</div>
+    </div>
+
+  </div>
+</div>
+
+<!-- ── 03. DLL 구조 ── -->
+<div class="section">
+  <div class="section-label">03 · DLL 구조 비교</div>
+  <div class="card">
+    <div class="dll-inner">
+      <table class="dll-tbl">
+        <thead>
+          <tr>
+            <th>항목</th>
+            <th>🔵 LucidDirect</th>
+            <th>🟣 Tradeify Lightning</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>초기 DLL</td>
+            <td><span class="mono">$1,200</span></td>
+            <td><span class="mono">$1,250</span></td>
+          </tr>
+          <tr>
+            <td>DLL 변화 기준</td>
+            <td>ITB($52,100) 초과 시</td>
+            <td>잔고 $53,000 (6% 수익) 도달 시</td>
+          </tr>
+          <tr class="dll-high">
+            <td>변화 후 DLL</td>
+            <td style="color:var(--direct);">Peak EOD × 60% (LucidScale)</td>
+            <td style="color:var(--lightning);">$2,000으로 증가 (고정)</td>
+          </tr>
+          <tr>
+            <td>소프트 브리치 여부</td>
+            <td>✓ 소프트 (당일 거래 제한, 계좌 유지)</td>
+            <td>✓ 소프트 (당일 거래 제한, 계좌 유지)</td>
+          </tr>
+          <tr>
+            <td>DLL 리셋 시점</td>
+            <td>매일 세션 시작 시</td>
+            <td>매일 6:00 PM ET</td>
+          </tr>
+        </tbody>
+      </table>
+      <div style="margin-top:10px; font-size:11.5px; color:var(--text-3);">
+        ※ LucidDirect: ITB 초과 후 LucidScale DLL은 수익이 클수록 DLL도 커지므로 운영 여유가 늘어남<br>
+        ※ Tradeify Lightning: $53,000 도달 시 DLL이 $1,250→$2,000으로 고정 증가 (그 이상 변화 없음)
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ── 04. 페이아웃 조건 ── -->
+<div class="section">
+  <div class="section-label">04 · 페이아웃 조건</div>
+  <div class="payout-grid">
+
+    <div class="payout-card pc-direct">
+      <div class="payout-card-header">🔵 LucidDirect</div>
+      <div class="payout-rows">
+        <div class="pr">
+          <span class="pr-label">최소 거래일</span>
+          <span class="pr-val" style="color:var(--direct);">5거래일 경과</span>
+        </div>
+        <div class="pr hl-warn">
+          <span class="pr-label">⚠ 컨시스턴시</span>
+          <span class="pr-val" style="color:var(--warn);">20% (전 회차 고정)</span>
+        </div>
+        <div class="pr hl-warn">
+          <span class="pr-label">⚠ 1회차 최소 목표</span>
+          <span class="pr-val" style="color:var(--warn);">$3,000</span>
+        </div>
+        <div class="pr">
+          <span class="pr-label">2회차~ 최소 목표</span>
+          <span class="pr-val" style="color:var(--direct);">$2,500</span>
+        </div>
+        <div class="pr">
+          <span class="pr-label">최대 출금 1~3회차</span>
+          <span class="pr-val" style="color:var(--direct);">$2,000</span>
+        </div>
+        <div class="pr hl-good">
+          <span class="pr-label">✓ 최대 출금 4~5회차</span>
+          <span class="pr-val" style="color:var(--good);">$2,500 ↑</span>
+        </div>
+        <div class="pr">
+          <span class="pr-label">최소 인출액</span>
+          <span class="pr-val" style="color:var(--direct);">$500</span>
+        </div>
+        <div class="pr">
+          <span class="pr-label">수익 배분</span>
+          <span class="pr-val" style="color:var(--direct);">90% / 10%</span>
+        </div>
+        <div class="pr">
+          <span class="pr-label">처리 시간</span>
+          <span class="pr-val" style="color:var(--text-2);">영업일 2일 이내</span>
+        </div>
+        <div class="pr">
+          <span class="pr-label">최대 페이아웃 횟수</span>
+          <span class="pr-val" style="color:var(--direct);">5회 → Live 전환</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="payout-card pc-lightning">
+      <div class="payout-card-header">🟣 Tradeify Lightning</div>
+      <div class="payout-rows">
+        <div class="pr hl-warn">
+          <span class="pr-label">⚠ 최소 거래일</span>
+          <span class="pr-val" style="color:var(--warn);">5일 (제품 페이지 기준)</span>
+        </div>
+        <div class="pr hl-warn">
+          <span class="pr-label">⚠ 컨시스턴시</span>
+          <span class="pr-val" style="color:var(--warn);">20%→25%→30% 점진 증가</span>
+        </div>
+        <div class="pr hl-warn">
+          <span class="pr-label">⚠ 1회차 최소 목표</span>
+          <span class="pr-val" style="color:var(--warn);">$3,000</span>
+        </div>
+        <div class="pr hl-good">
+          <span class="pr-label">✓ 2회차~ 최소 목표</span>
+          <span class="pr-val" style="color:var(--good);">$2,000</span>
+        </div>
+        <div class="pr">
+          <span class="pr-label">최대 출금 1~3회차</span>
+          <span class="pr-val" style="color:var(--lightning);">$2,000</span>
+        </div>
+        <div class="pr hl-good">
+          <span class="pr-label">✓ 최대 출금 4회차~</span>
+          <span class="pr-val" style="color:var(--good);">$2,500 ↑</span>
+        </div>
+        <div class="pr">
+          <span class="pr-label">최소 인출액</span>
+          <span class="pr-val" style="color:var(--lightning);">$1,000</span>
+        </div>
+        <div class="pr hl-good">
+          <span class="pr-label">✓ 수익 배분</span>
+          <span class="pr-val" style="color:var(--good);">첫 $15,000 → 100%<br>이후 → 90% / 10%</span>
+        </div>
+        <div class="pr">
+          <span class="pr-label">처리 시간</span>
+          <span class="pr-val" style="color:var(--text-2);">24시간 이내 (영업외 72시간)</span>
+        </div>
+        <div class="pr">
+          <span class="pr-label">최대 페이아웃 횟수</span>
+          <span class="pr-val" style="color:var(--lightning);">제한 없음 → Elite 전환 가능</span>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<!-- ── 05. 출금 전략 ── -->
+<div class="section">
+  <div class="section-label">05 · ITB 유지 기준 회차별 출금 전략 (계좌 1개 기준)</div>
+  <div class="card">
+    <table class="tbl cf-tbl">
+      <thead>
+        <tr>
+          <th class="th-item">회차</th>
+          <th class="th-direct">Direct 출금 신청</th>
+          <th class="th-direct" style="background:var(--direct-bg); color:var(--direct);">Direct 목표 잔고</th>
+          <th class="th-direct" style="background:var(--direct-bg); color:var(--direct);">Direct 실수령</th>
+          <th class="th-lightning">Lightning 출금 신청</th>
+          <th class="th-lightning" style="background:var(--lightning-bg); color:var(--lightning);">Lightning 목표 잔고</th>
+          <th class="th-lightning" style="background:var(--lightning-bg); color:var(--lightning);">Lightning 실수령</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td class="item-label">1회</td>
+          <td class="col-direct"><span class="mono">$2,000</span></td>
+          <td class="col-direct"><span class="val-direct">$54,100</span></td>
+          <td class="col-direct"><span class="val-direct">$1,800</span></td>
+          <td class="col-lightning"><span class="mono">$2,000</span></td>
+          <td class="col-lightning"><span class="val-lightning">$54,100</span></td>
+          <td class="col-lightning"><span class="val-good">$2,000</span> <span class="muted">※100%</span></td>
+        </tr>
+        <tr>
+          <td class="item-label">2회</td>
+          <td class="col-direct"><span class="mono">$2,000</span></td>
+          <td class="col-direct"><span class="val-direct">$54,100</span></td>
+          <td class="col-direct"><span class="val-direct">$1,800</span></td>
+          <td class="col-lightning"><span class="mono">$2,000</span></td>
+          <td class="col-lightning"><span class="val-lightning">$54,100</span></td>
+          <td class="col-lightning"><span class="val-good">$2,000</span> <span class="muted">※100%</span></td>
+        </tr>
+        <tr>
+          <td class="item-label">3회</td>
+          <td class="col-direct"><span class="mono">$2,000</span></td>
+          <td class="col-direct"><span class="val-direct">$54,100</span></td>
+          <td class="col-direct"><span class="val-direct">$1,800</span></td>
+          <td class="col-lightning"><span class="mono">$2,000</span></td>
+          <td class="col-lightning"><span class="val-lightning">$54,100</span></td>
+          <td class="col-lightning"><span class="val-good">$2,000</span> <span class="muted">※$15K 구간 내</span></td>
+        </tr>
+        <tr class="key-row">
+          <td class="item-label">4회 ↑</td>
+          <td class="col-direct"><span class="mono" style="color:var(--direct); font-weight:700;">$2,500</span></td>
+          <td class="col-direct"><span class="val-direct">$54,600</span></td>
+          <td class="col-direct"><span class="val-direct">$2,250</span></td>
+          <td class="col-lightning"><span class="mono" style="color:var(--lightning); font-weight:700;">$2,500</span></td>
+          <td class="col-lightning"><span class="val-lightning">$54,600</span></td>
+          <td class="col-lightning"><span class="val-lightning">$2,250</span> <span class="muted">※90%</span></td>
+        </tr>
+        <tr class="key-row">
+          <td class="item-label">5회 ↑</td>
+          <td class="col-direct"><span class="mono" style="color:var(--direct); font-weight:700;">$2,500</span></td>
+          <td class="col-direct"><span class="val-direct">$54,600</span></td>
+          <td class="col-direct"><span class="val-direct">$2,250</span></td>
+          <td class="col-lightning"><span class="mono" style="color:var(--lightning); font-weight:700;">$2,500</span></td>
+          <td class="col-lightning"><span class="val-lightning">$54,600</span></td>
+          <td class="col-lightning"><span class="val-lightning">$2,250</span> <span class="muted">※90%</span></td>
+        </tr>
+      </tbody>
+      <tfoot>
+        <tr>
+          <td class="item-label">5회 합계</td>
+          <td class="col-direct"><span class="mono">$11,000</span></td>
+          <td class="col-direct">—</td>
+          <td class="col-direct"><span class="val-direct">$9,900</span></td>
+          <td class="col-lightning"><span class="mono">$11,000</span></td>
+          <td class="col-lightning">—</td>
+          <td class="col-lightning"><span class="val-good" style="font-size:14px;">$10,500</span> <span class="muted">※100% 구간 가정</span></td>
+        </tr>
+      </tfoot>
+    </table>
+    <div style="padding:10px 16px; font-size:11.5px; color:var(--text-3); border-top:1px solid var(--border-light);">
+      ※ 출금 후 잔고 $52,100(ITB) 유지 가정 · Lightning 1~3회 실수령은 누적 출금액이 첫 $15,000 이내라면 100% 수령 · 4회차부터 90/10 전환 · 실제 수령액은 $15K 소진 시점에 따라 달라짐
+    </div>
+  </div>
+</div>
+
+<!-- ── 06. 운영 요약 ── -->
+<div class="section">
+  <div class="section-label">06 · 운영 관점 요약</div>
+  <div class="summary-grid">
+    <div class="sum-card sc-direct">
+      <h3>🔵 LucidDirect</h3>
+      <ul>
+        <li class="pro">컨시스턴시 20% 전 회차 고정 — 예측 가능한 운영</li>
+        <li class="pro">4~5회차 최대 출금 $2,500</li>
+        <li class="pro">버퍼 잔고 없음</li>
+        <li class="pro">ITB 초과 후 LucidScale DLL — 수익 클수록 DLL 여유 증가</li>
+        <li class="con">DLL $1,200 — 변동성 큰 날 당일 거래 제한 리스크</li>
+        <li class="con">1회차 최소 목표 $3,000, 2회차~ $2,500</li>
+        <li class="con">최소 5거래일 경과 후 출금 신청 가능</li>
+        <li class="con">구매 비용 $364 (쿠폰 적용, 정가 $520) — Lightning보다 높음</li>
+      </ul>
+    </div>
+    <div class="sum-card sc-lightning">
+      <h3>🟣 Tradeify Lightning</h3>
+      <ul>
+        <li class="pro">구매 비용 $320 (할인가, 정가 $492) — Direct보다 $44 저렴</li>
+        <li class="con">최소 거래일 5일 (제품 페이지 기준 — 헬프센터와 상이, 확인 필요)</li>
+        <li class="pro">첫 $15,000 수익 100% 수령 (약 $600 추가 이익)</li>
+        <li class="pro">2회차~ 최소 목표 $2,000 (Direct보다 $500 낮음)</li>
+        <li class="pro">페이아웃 횟수 제한 없음 → Elite Live 전환 가능</li>
+        <li class="con">컨시스턴시 회차마다 증가 (20%→25%→30%)</li>
+        <li class="con">DLL $1,250 — 초기 Direct보다 약간 높음</li>
+        <li class="con">리셋 불가 — 계좌 실패 시 재구매 필요</li>
+        <li class="con">주 1회 이상 거래 의무 (미충족 시 계좌 삭제)</li>
+      </ul>
+    </div>
+  </div>
+</div>
+
+<!-- ── 주의사항 ── -->
+<div class="notice">
+  <strong>⚠ 공통 주의사항</strong><br>
+  · 페이아웃 신청 후 처리 전에 잔고가 최소 목표 아래로 내려가면 신청 거부 (양사 공통)<br>
+  · Tradeify Lightning 최소 거래일: 제품 페이지엔 "5 Days" 표기, 헬프센터엔 "No Minimum Trading Day Count" 명시 — 실제 적용 기준 디스코드 또는 고객지원 확인 권장<br>
+  · Tradeify Lightning은 컨시스턴시 산정 시 손실일이 생기면 분모(총수익)가 줄어 비율이 악화될 수 있음<br>
+  · ITB 초과 후 출금 시 MLL 재trailing 여부는 LucidDirect 공식 미확인 → 공식 디스코드 확인 권장<br>
+  · Lightning 첫 $15,000 100% 구간은 계좌당 누적 출금 기준 — 평생 1회만 해당
+</div>
+
+<!-- ── 용어 정의 ── -->
+<div class="section">
+  <div class="section-label">📖 · 프랍 펌 핵심 용어 정의</div>
+  <div class="glossary">
+    <div class="glossary-header">📖 &nbsp;용어 정의 (Glossary)</div>
+    <div class="glossary-grid">
+
+      <div class="glos-item">
+        <div class="glos-term">MLL <span class="glos-abbr">Max Loss Limit / Trailing Max Drawdown</span></div>
+        <div class="glos-def">계좌 전체의 최대 손실 한도. 잔고가 이 선 아래로 내려가면 즉시 계좌 종료(하드 브리치). 50K 기준 $2,000. 초기 잔고 $50,000 기준 하한선 $48,000에서 시작. <em>장 중에도 실시간 적용됨 — DLL과 달리 MLL은 소프트 브리치 없음.</em></div>
+      </div>
+
+      <div class="glos-item">
+        <div class="glos-term">DLL <span class="glos-abbr">Daily Loss Limit</span></div>
+        <div class="glos-def">하루 최대 손실 한도. 소프트 브리치 방식으로, 도달 시 계좌가 날아가지 않고 당일 거래만 중단됨. 다음 세션 시작 시 리셋. <em>DLL에 의존해 손절하면 안 됨 — 슬리피지로 MLL을 초과할 수 있음.</em></div>
+      </div>
+
+      <div class="glos-item">
+        <div class="glos-term">EOD Drawdown <span class="glos-abbr">End-of-Day Trailing Drawdown</span></div>
+        <div class="glos-def">MLL이 장 중 고점이 아닌 세션 마감 잔고 기준으로만 업데이트되는 방식. 장 중 급등락에 의한 spike-out 위험 없음. LucidDirect · Tradeify Lightning 모두 적용. <em>단, 장 중이라도 현재 MLL 선을 실시간으로 건드리면 즉시 계좌 종료.</em></div>
+      </div>
+
+      <div class="glos-item">
+        <div class="glos-term">Trailing Drawdown</div>
+        <div class="glos-def">잔고가 올라갈수록 MLL도 따라 올라가는 방식. 예: 잔고 $51,000 → MLL $49,000, 잔고 $52,000 → MLL $50,000. ITB에 도달하면 trailing이 멈추고 MLL이 영구 고정됨.</div>
+      </div>
+
+      <div class="glos-item">
+        <div class="glos-term">ITB <span class="glos-abbr">Initial Trail Balance</span></div>
+        <div class="glos-def">MLL trailing이 멈추는 기준 잔고. 양사 50K 모두 $52,100. 계좌 잔고가 EOD 기준으로 ITB를 초과하면 MLL이 $50,100에 영구 고정됨. 이후 잔고가 얼마나 올라도 MLL은 더 이상 움직이지 않음.</div>
+      </div>
+
+      <div class="glos-item">
+        <div class="glos-term">Locked MLL Balance</div>
+        <div class="glos-def">ITB 초과 후 MLL이 고정되는 금액. 양사 50K 모두 $50,100. 사실상 계좌 보호 안전선. 이 금액 아래로 내려가면 계좌 종료. 세이프티넷(Apex 용어)과 유사한 개념.</div>
+      </div>
+
+      <div class="glos-item">
+        <div class="glos-term">LucidScale DLL</div>
+        <div class="glos-def">LucidDirect에서 ITB 초과 후 고정 DLL 대신 적용되는 동적 DLL. 공식: 역대 최고 EOD 수익 × 60%. 수익이 클수록 DLL도 커지며 감소하지 않음. <em>수익이 쌓일수록 일일 운영 여유가 자동으로 늘어나는 구조.</em></div>
+      </div>
+
+      <div class="glos-item">
+        <div class="glos-term">컨시스턴시 룰 <span class="glos-abbr">Consistency Rule</span></div>
+        <div class="glos-def">단일 최대 수익일이 사이클 총수익에서 차지하는 비율 제한. 공식: 최대 단일일 수익 ÷ 사이클 총수익 ≤ 규정 %. 초과 시 총수익을 더 쌓아 비율을 낮춰야 페이아웃 신청 가능. <em>손실일이 생기면 총수익이 줄어 비율이 악화됨 주의.</em></div>
+      </div>
+
+      <div class="glos-item">
+        <div class="glos-term">소프트 브리치 <span class="glos-abbr">Soft Breach</span></div>
+        <div class="glos-def">DLL에 도달해도 계좌가 종료되지 않고 당일 거래만 중단되는 방식. MLL을 초과해야 계좌가 실제로 종료(하드 브리치). LucidDirect · Tradeify Lightning 모두 DLL은 소프트 브리치.</div>
+      </div>
+
+      <div class="glos-item">
+        <div class="glos-term">페이아웃 사이클 <span class="glos-abbr">Payout Cycle</span></div>
+        <div class="glos-def">각 출금 신청 사이의 기간. 페이아웃 승인마다 리셋됨. 컨시스턴시 룰, 최소 수익 목표, 최소 거래일 등 모든 조건이 이 사이클 단위로 측정. 이전 사이클 잔여 수익은 이월되지 않음.</div>
+      </div>
+
+      <div class="glos-item">
+        <div class="glos-term">수익 배분 <span class="glos-abbr">Profit Split</span></div>
+        <div class="glos-def">실현 수익을 트레이더와 프랍 펌이 나누는 비율. LucidDirect: 전 회차 90/10. Tradeify Lightning: 첫 $15,000 누적 출금까지 100%, 이후 90/10. <em>출금 신청액 전액이 계좌에서 차감되고, 배분 비율에 따른 금액이 실제 입금.</em></div>
+      </div>
+
+      <div class="glos-item">
+        <div class="glos-term">버퍼 잔고 <span class="glos-abbr">Buffer Balance</span></div>
+        <div class="glos-def">일부 프랍 펌에서 페이아웃 신청 전 MLL 위에 추가로 유지해야 하는 안전 잔고. LucidDirect · Tradeify Lightning 모두 버퍼 잔고 요건 없음. <em>단, 출금 신청 후 처리 전에 잔고가 최소 목표 아래로 내려가면 거부될 수 있음.</em></div>
+      </div>
+
+      <div class="glos-item">
+        <div class="glos-term">Live 전환 <span class="glos-abbr">LucidLive / Tradeify Elite</span></div>
+        <div class="glos-def">시뮬레이션 계좌에서 실제 자본이 투입된 라이브 계좌로 전환. LucidDirect: 5회 페이아웃 후 전환 (전체 sim 계좌 동시 종료). Tradeify: 3~5회 페이아웃 후 Tradeify가 선발 → Elite Live 전환.</div>
+      </div>
+
+      <div class="glos-item">
+        <div class="glos-term">Mini / Micro <span class="glos-abbr">계약 단위</span></div>
+        <div class="glos-def">선물 계약 단위. NQ 기준 Mini(NQ) 1계약 = Micro(MNQ) 10계약. 4 Mini = 40 Micro. 양사 모두 50K 기준 최대 4 Mini / 40 Micro. Mini와 Micro 동시 보유 불가 (Tradeify 명시).</div>
+      </div>
+
+      <div class="glos-item">
+        <div class="glos-term">EOD <span class="glos-abbr">End of Day</span></div>
+        <div class="glos-def">장 마감 기준 시점. LucidDirect: 4:45 PM EST / Tradeify Lightning: 4:59 PM EST. 모든 포지션을 이 시간 전에 청산 필수. MLL 업데이트 및 DLL 리셋도 이 시점 기준.</div>
+      </div>
+
+      <div class="glos-item">
+        <div class="glos-term">즉시 펀디드 <span class="glos-abbr">Instant / Straight-to-Funded</span></div>
+        <div class="glos-def">평가(Evaluation) 없이 바로 펀디드 계좌로 진입하는 방식. 대가로 구매 비용이 높고 컨시스턴시 등 페이아웃 조건이 평가 통과 후 계좌보다 엄격한 경우가 많음. LucidDirect · Tradeify Lightning 모두 즉시 펀디드.</div>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<!-- FOOTER -->
+<footer>
+  <span>AlphaLog · 자체 조사 참고용 · 실제 거래 전 공식 사이트 최종 확인 권장</span>
+  <span>출처: support.lucidtrading.com · help.tradeify.co · 2026.06</span>
+</footer>
+
+</div>
+</body>
+</html>
